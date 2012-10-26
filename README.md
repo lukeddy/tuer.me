@@ -94,3 +94,7 @@ tuer.me
   可以自行注释相关代码，并在数据库中手动增加用户即可。
 
   默认会有一个测试账户，在init.js中被添加 用户名admintest@tuer.me 密码1234qwer
+
+  配置成功之后解图如下：
+  
+  ![成功登陆之后的样子](http://ww1.sinaimg.cn/large/62bfb217jw1dy8lbyoaepj.jpg "安装成功")
