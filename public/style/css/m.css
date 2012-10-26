@@ -1,0 +1,12 @@
+body{font-family:Helvetica,Arial,sans-serif;word-break:break-all;word-wrap:break-word;text-overflow:ellipsis;}
+body,ul,ol,form{margin:0;padding:0;}
+ul,ol{list-style:none;}
+h1,h2,h3,div,li,p{margin:0;padding:2px 2px;font-size:medium;}
+.header{background:#45AEEA;}
+.header a{color:#fff;}
+.pagination li,.header ul li{display:inline;margin-right:2px;}
+.pagination .cur a{color:red;}
+a.cur {font-weight:bold;}
+.error{color:red;}
+.success{color:green;}
+.info{color:blue;}
