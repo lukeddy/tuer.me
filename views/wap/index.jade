@@ -1,0 +1,21 @@
+extends common/layout
+block content
+  if(session.error.length)
+    p(class="error") #{session.error}
+  form(class="warp",action="/login",method="post")
+    p 
+     label(for="accounts") Email
+    p 
+     input(type="text",id="accounts",name="email")
+    p 
+     label(for="pwd") 密码
+    p 
+     input(type="password",id="pwd",name="pwd")
+    p
+     input(type="checkbox",id="remember",name="remember")
+     label(for="remember") 记住我
+    p
+     input(type="submit",value="登陆")
+  p 
+   a(href="/register") 注册 
+   a(href="/diaries") 随便看看

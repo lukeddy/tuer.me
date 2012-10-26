@@ -1,0 +1,31 @@
+div(class='navbar navbar-fixed-top')
+  div(class='navbar-inner')
+    div(class='container')
+       a(class='btn btn-navbar', data-target='.nav-collapse', data-toggle='collapse')
+         span(class='icon-bar')
+         span(class='icon-bar')
+         span(class='icon-bar')
+       a(class='brand', href='/') Tuer.me
+       div(class='nav-collapse')
+         ul(class='nav')
+           - var muens;
+           - if(session.is_login){
+             - muens = [{text:'首页',href:'/',template:'index'},{text:'我的主页',href:'/user/profile/'+session.userdata._id,template:'myprofile'},{text:'我关注的日记',href:'/followed/diaries/',template:'followedDiaries'},{text:'全部日记',href:'/diaries',template:'diaries'},{text:'手机简版',href:'http://m.tuer.me'}];
+           - }else{
+             - muens = config.muens;
+           - }
+           for muen in muens
+             - var cls=''
+             - if(session.template == muen.template)
+               - cls='active'
+             li(class='#{cls}')
+               a(href='#{muen.href}',title='#{muen.text}') #{muen.text} 
+       form(class='navbar-search pull-left',action='/search/',method='get')
+         input(class='search-query span2',type='text',placeholder='Search',name='q')
+       ul(class='nav pull-right')
+         - var operate = config.nav
+         - if(session.is_login)
+           - operate = config.loginnav
+         each item in operate
+          li
+            a(href='#{item.href}') #{item.text}

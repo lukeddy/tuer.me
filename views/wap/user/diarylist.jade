@@ -1,0 +1,18 @@
+extends ../common/layout
+block content
+  h2 #{user.nick}的最新日记
+    small (#{diaryCount})
+  if(diaries.length)
+    each diary,i in diaries
+      p 
+       if(diary.title)
+         a(href="/diary/#{diary._id}") #{diary.title}
+       else
+         a(href="/diary/#{diary._id}") #{diary.bookname}
+       p 
+        if(diary.img)
+          img(src="#{diary.img}")
+        span #{diary.content}
+     !{pag}
+   else
+     p 他还啥都没有写过

@@ -1,0 +1,27 @@
+extends ../common/layout
+block content
+  div(class='container')
+    form(class='form-horizontal',method='post',action='/login')
+      legend 登录本站
+      if(session.error.length)
+        div(class='alert alert-error') #{session.error}
+          a(class='close',data-dismiss='alert') &times;
+      div(class='control-group validation-container')
+        label(class='control-label',for='J_email') 邮箱
+        div(class='controls')
+          input(id='J_email',type='text',class='input-xlarge',placeholder='Email',name='email')
+      div(class='control-group validation-container')
+        label(class='control-label',for='J_pwd') 密码
+        div(class='controls')
+          input(id='J_pwd',type='password',class='input-xlarge',placeholder='Password',name='pwd')
+      div(class='control-group')
+        div(class='controls')
+          p
+            a(href='/forgot/') 忘记密码 &nbsp;
+            a(href='/register/') 注册 
+          label(class='checkbox') 记住我
+            input(type='checkbox',name='remember')
+          button(type='submit',class='btn btn-primary') 登入
+    include ../common/footer
+  script
+    seajs.use('mods/login');

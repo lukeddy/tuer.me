@@ -1,0 +1,114 @@
+extends ../common/layout
+block content
+  div(class='container')
+    div(class='row-fluid show-grid')
+      div(class='span12')
+         h4 #{user.nick} 的日记 
+           small &nbsp;&nbsp;(#{user.profile})
+         if(!isSelf)
+           ul(class='User-muen')
+             li
+              a(class='gh-btn',href='/user/profile/#{user._id}') #{user.nick} 的主页
+         hr 
+         div(class='Diary-wrap')
+           div(class='Diary-row')
+            div(class='Diary-left')
+              a(href='/user/profile/#{user._id}')
+               img(src='#{user.avatarUrl}',alt='#{user.nick}')
+            div(class='Diary-right')
+             if(diary.title)
+               h5 #{diary.title}  
+                 small #{diary.bookname} 
+                 if(diary.weather)
+                   small [天气:#{diary.weather}] 
+                 if(diary.mood)
+                   small [心情:#{diary.mood}] 
+                 if(diary.location)
+                   small [地点:#{diary.location}]
+             else
+               h5 #{diary.bookname} 
+                 if(diary.weather)
+                   small [天气:#{diary.weather}] 
+                 if(diary.mood)
+                   small [心情:#{diary.mood}] 
+                 if(diary.location)
+                   small [地点:#{diary.location}]
+             div(class='Diary-content') 
+               if(diary.img)
+                  p 
+                    a(title='点击展示大图',href='#myPic',target='_blank',data-toggle="modal") 
+                      img(src='#{diary.img}')
+               !{diary.content}
+             if(diary.forbid == 1)
+               div(class='bar') #{diary.created_user}已将日记设置为不允许任何人评论 
+             div(class='share-bar')
+               a(href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()") 
+                  img(src='http://img2.douban.com/pics/fw2douban1.png',alt='推荐到豆瓣')
+               script
+                   (function(){
+                    var _w = 86 , _h = 16;
+                    var param = {
+                      url:location.href,
+                      type:'6',
+                      count:'', /**是否显示分享数，1显示(可选)*/
+                      appkey:'1719894406', /**您申请的应用appkey,显示分享来源(可选)*/
+                      title:'', /**分享的文字内容(可选，默认为所在页面的title)*/
+                      pic:'', /**分享图片的路径(可选)*/
+                      ralateUid:'', /**关联用户的UID，分享微博会@该用户(可选)*/
+                      language:'zh_cn', /**设置语言，zh_cn|zh_tw(可选)*/
+                      rnd:new Date().valueOf()
+                    }
+                    var temp = [];
+                    for( var p in param ){
+                      temp.push(p + '=' + encodeURIComponent( param[p] || '' ) )
+                    }
+                    document.write('<iframe allowTransparency="true" frameborder="0" scrolling="no" src="http://hits.sinajs.cn/A1/weiboshare.html?' + temp.join('&') + '" width="'+ _w+'" height="'+_h+'"></iframe>')
+                   })()
+             div(class='bar') #{diary.created_at} #{diary.created_user} #{diary.commentcount}回应  
+               if(isSelf)
+                 a(class='btn',href='/diary/edit/#{diary._id}') 编辑
+                 form(action='/diary/remove',method='post') 
+                   input(type='hidden',value='#{diary._id}',name='id')
+                   button(class='btn btn-danger',type='submit') 删除 
+             if(comments.length)
+               each item,i in comments
+                  div(class='row-fluid show-grid comment-item')
+                      div(class='span1 comment-user') 
+                          a(href='/user/profile/#{item.userpage}')
+                              img(src='#{item.avatarUrl}',alt='#{item.nick}')
+                      div(class='span6')
+                          div(class='comment-bar') #{item.created_at} 
+                              a(href='/user/profile/#{item.userpage}') #{item.nick} 
+                              small (#{item.profile}) 
+                              if(item.del)
+                                form(class='delete-comment',action='/comment/remove',method='post')
+                                  input(value='#{item._id}',type='hidden',name='commentid')
+                                  input(value='#{diary._id}',type='hidden',name='diaryid')
+                                  button(class='btn btn-danger',type='submit') 删除 
+                          div(class='comment-content') !{item.content} 
+                            if(item.reply && diary.forbid == 0)
+                              a(href='#',class='J_reply',data-replyname='#{item.nick}',data-replyid='#{item.userid}',data-diaryid='#{diary._id}') 回复
+             !{pag}
+             if(session.is_login)
+               if(diary.forbid == 0)
+                   form(class='form-horizontal comment',action='/comment/save',method='post')
+                     if(session.error.length)
+                       div(class='control-group error')
+                         div(class='controls')
+                            span(class='help-inline') #{session.error}
+                     div(class='control-group')
+                       div(class='controls')
+                         textarea(class='input-xlarge',rows='5',id='J_comment_textarea',name='content')
+                         input(type='hidden',value='#{diary._id}',name='diaryid')
+                     div(class='control-group') 
+                       div(class='controls')
+                          button(class='btn btn-primary',type='submit',id='J_comment_submit') 回复
+             else
+               a(href='/login') 登录之后就可以评论啦！
+    include ../common/footer
+    if(diary.img)
+      div(class="modal hide fade",id="myPic",role="dialog",tabindex="-1",aria-labelledby="myPicLabel",aria-hidden="true")
+        div(class="modal-body")
+          img(src="#{diary.bigimg}")
+  script
+    seajs.use('mods/diarydetail');

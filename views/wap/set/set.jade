@@ -1,0 +1,19 @@
+extends ../common/layout
+block content
+  h2 设置
+  if(session.error.length)
+    p(class="error") #{session.error}
+  if(session.success.length)
+    p(class="success") #{session.success}
+  form(action="/set/update",method="post")
+    p 
+      label 昵称:
+        input(type="text",value="#{user.nick}",name="nick")
+    p
+      label 签名:
+        input(type="text",value="#{user.profile}",name="profile")
+    p
+      a(href="/set/pwd") 修改密码
+    p
+      input(type="submit",value="修改")
+

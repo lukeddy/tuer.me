@@ -1,0 +1,19 @@
+extends ../common/layout
+block content
+  h2 修改密码
+  if(session.error.length)
+    p(class="error") #{session.error}
+  if(session.success.length)
+    p(class="success") #{session.success}
+  form(action="/set/pwdSave",method="post")
+    p
+      label 旧密码:
+        input(type="password",value="",name="old_pwd")
+    p
+      label 新密码:
+        input(type="password",value="",name="new_pwd")
+    p
+      label 再次确认:
+        input(type="password",value="",name="confirm_pwd")
+    p
+      input(type="submit",value="修改密码")

@@ -1,0 +1,16 @@
+extends ../common/layout
+block content
+  div(class='container')
+    h3 搜索结果: 
+    each item,i in result
+      p 
+        if(item._id)
+          if(item.title)
+            a(href='/diary/#{item._id}') #{item.title}
+            small [#{item.bookname}]
+          else
+            a(href='/diary/#{item._id}') #{item.bookname}
+            small [#{item.content}]
+        else
+          p #{item.title}
+    include ../common/footer

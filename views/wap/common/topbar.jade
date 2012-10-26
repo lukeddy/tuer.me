@@ -1,0 +1,20 @@
+div(class="header")
+  if(session.is_login)
+    - var all = "",write = "",set = "";
+    - if(title == "全部日记") all = "cur";
+    - if(title == "写日记") write = "cur";
+    - if(title == "设置") set = "cur";
+    ul
+     li 
+       a(href="/") Tuer.me
+     li 
+       a(href="/diaries",class="#{all}") 全部日记
+     li 
+       a(href="/diary/write",class="#{write}") 写日记
+     li 
+       a(href="/set",class="#{set}") 设置
+     li 
+       a(href="/logout") 退出
+  else
+    h1
+      a(href="/") Tuer.me

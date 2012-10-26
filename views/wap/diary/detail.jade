@@ -1,0 +1,45 @@
+extends ../common/layout
+block content
+  if(session.error.length)
+    p(class="error") #{session.error}
+  if(diary.title)
+    h2 #{diary.title}
+  else 
+    h2 #{diary.bookname}
+  p #{diary.created_at}
+  div 
+    if(diary.img)
+      p 
+        img(src="#{diary.img}")
+    a(href="/profile/#{user._id}",title="#{user.nick}") #{user.nick}:
+    !{diary.content}
+    if(isSelf)
+      p 
+        a(href="/diary/edit/#{diary._id}") 编辑
+        form(action="/diary/remove",method="post")
+          input(type="hidden",value="#{diary._id}",name="id")
+          button(type="submit") 删除
+  if(diary.forbid == 1)
+    p(class="info") #{diary.created_user}已将日记设置为不允许任何人评论 
+  if(comments.length)
+    each item,i in comments
+      p 
+        a(href="/profile/#{item.userpage}") #{item.nick}:
+        span #{item.content} 
+        if(item.del)
+          form(action="/comment/remove",method="post")
+            input(value='#{item._id}',type='hidden',name='commentid')
+            input(value='#{diary._id}',type='hidden',name='diaryid')
+            button(type='submit') 删除 
+    !{pag}
+  if(session.is_login)
+    if(diary.forbid == 0)
+      form(action='/comment/save',method='post')
+        p 
+          textarea(name='content')
+          input(type='hidden',value='#{diary._id}',name='diaryid')
+        p 
+          button(type='submit') 回复
+  else
+    a(href='/') 登录之后就可以评论啦！
+

@@ -1,0 +1,20 @@
+form(class='form-horizontal indexLogin',method='post',action='/login')
+  legend 登录兔耳
+  div(class='control-group')
+    label(class='control-label',for='J_email') 
+      i(class='icon-user')
+    div(class='controls')
+      input(id='J_email',type='text',placeholder='Email',name='email')
+  div(class='control-group')
+    label(class='control-label',for='J_pwd')
+      i(class='icon-lock')
+    div(class='controls')
+      input(id='J_pwd',type='password',placeholder='Password',name='pwd')
+  div(class='control-group')
+     div(class='controls')
+       p
+         a(href='/forgot/') 忘记密码 &nbsp;
+         a(href='/register/') 注册
+       label(class='checkbox') 记住我
+         input(type='checkbox',name='remember')
+       button(type='submit',class='btn btn-primary') 登入

@@ -1,0 +1,32 @@
+extends ../common/layout
+block content
+  if(isSelf)
+    h1 欢迎,#{user.nick}! 
+      small (#{user.profile})
+  else 
+    h1 #{user.nick} 
+      small (#{user.profile})
+  if(isSelf && tips.length)
+    h3 提醒
+    each tip,i in tips
+      p 
+       if(tip.content)
+         a(href="/diary/#{tip._id}") #{tip.content}有了一条你的新回复
+       else
+         a(href="/profile/#{tip._id}") #{tip.nick}开始关注你了
+  h2 #{user.nick}的最新日记
+    small (#{diaryCount})
+  if(diaries.length)
+    each diary,i in diaries
+      p 
+       if(diary.title)
+         a(href="/diary/#{diary._id}") #{diary.title}
+       else
+         a(href="/diary/#{diary._id}") #{diary.bookname}
+       p 
+        if(diary.img)
+          img(src="#{diary.img}")
+        span #{diary.content}
+     !{pag}
+   else
+     p 他还啥都没有写过

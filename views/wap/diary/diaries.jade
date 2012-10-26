@@ -1,0 +1,18 @@
+extends ../common/layout
+block content
+  h2 全部日记
+  if(diaries.length)
+    ul
+      each item,i in diaries 
+        li
+          if(item.title)
+            a(href="/diary/#{item._id}") #{item.title} 
+          else
+            a(href="/diary/#{item._id}") #{item.bookname} 
+          a(href="/profile/#{item.userid}") #{item.created_user}: 
+          if(item.img)
+            img(src="#{item.img}") 
+          span #{item.content} 
+     !{pag}
+  else
+     p 还没有日记

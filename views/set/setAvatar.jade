@@ -1,0 +1,49 @@
+extends ../common/layout
+block content
+  script(src='http://js.tuer.me/libs/imgforbase64/swfobject.js');
+  link(rel='stylesheet',href='http://css.tuer.me/libs/Jcrop/css/jquery.Jcrop.min.css');
+  script(src='http://js.tuer.me/libs/Jcrop/js/jquery.Jcrop.min.js');
+  div(class='container')
+    form(id='avatarSave',class='form-horizontal',action='/set/avatarSave',method='post')
+      legend 设置头像
+      if(session.error.length)
+          div(class='control-group error')
+              label(class='control-label')
+              div(class='controls') 
+                  span(class='help-inline') #{session.error}
+      if(session.success.length)
+          div(class='control-group success')
+              label(class='control-label')
+              div(class='controls') 
+                  span(class='help-inline') #{session.success}
+      div(class='control-group')
+        label(class='control-label') 修改缩略图
+        div(class='controls')
+          div(class='span',style="margin-left:0px;")
+            img(id='J_BigPic','src'='#{user.BigavatarUrl}')
+          div(class='span')
+            div(style="width:48px;height:48px;overflow:hidden")
+              img(id='J_SmallPic','src'='#{user.BigavatarUrl}',class="jcrop-preview")
+              img(src='#{user.avatarUrl}',style='width:1px;height:1px;')
+      div(class='control-group')
+        div(class='controls')
+          input(type='hidden',id='J_Coordinate',name="coordinate",value="#{user.coords}")
+          button(class='btn btn-primary',type='submit') 修改
+    form(id='avatarUpload',class='form-horizontal',action='/set/upload',method='post')
+      legend 上传头像
+      div(class='control-group')
+        div(class='controls')
+          img(id="J_preview",src='#{user.BigavatarUrl}')
+      div(class='control-group')
+        div(class='controls')
+          a(href='#',id='J_Change_Avatar',class='btn',style='position:relative;') 选择图片
+            span(style='position:absolute;left:0px;top:0px;')
+              em(id='avatar') must support flashplayer
+          input(id='J_avatar',type='hidden',name='avatar',value='#{user.avatar}')
+      div(class='control-group')
+        div(class='controls')
+          button(class='btn btn-primary',type='submit') 上传
+    include ../common/footer
+  script
+      seajs.use('mods/avatar');
+  

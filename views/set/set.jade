@@ -1,0 +1,58 @@
+extends ../common/layout
+block content
+  div(class='container')
+    form(class='form-horizontal',action='/set/update',method='post')
+      legend 帐号设置
+      if(session.error.length)
+          div(class='control-group error')
+              label(class='control-label')
+              div(class='controls') 
+                  span(class='help-inline') #{session.error}
+      if(session.success.length)
+          div(class='control-group success')
+              label(class='control-label')
+              div(class='controls') 
+                  span(class='help-inline') #{session.success}
+      div(class='control-group')
+        label(class='control-label',for='J_nick') 头像
+        div(class='controls')
+          div(class='span',style="margin-left:0px;")
+            img(id='J_preview','src'='#{user.BigavatarUrl}')
+          div(class='span')
+            img(id='J_preview','src'='#{user.avatarUrl}')
+      div(class='control-group validation-container')
+        div(class='controls')
+          a(href="/set/avatar",title="修改头像") 修改头像
+      div(class='control-group validation-container')
+        label(class='control-label',for='J_nick') 昵称 
+        div(class='controls')
+          input(id='J_nick',type='text',class='input-samll',value='#{user.nick}',placeholder='昵称',name='nick')
+      div(class='control-group validation-container')
+        label(class='control-label',for='J_profile') 签名 
+        div(class='controls')
+            input(id='J_profile',class='input-samll',type='text',name='profile',placeholder='签名',value="#{user.profile}")
+      div(class='control-group validation-container')
+        label(class='control-label',for='J_profile') 个人介绍
+        div(class='controls')
+            textarea(id='J_profile',class='input-xlarge',name='about',placeholder='个人介绍') #{user.about}
+      div(class='control-group validation-container')
+        div(class='controls') 
+          a(href="/set/pwd",title="修改密码") 修改密码
+      div(class='control-group validation-container')
+        label(class='control-label',for='J_soleUrl') 唯一页面地址 
+        div(class='controls')
+            if(!user.pageurl)
+              input(id='J_soleUrl',class='input-samll',name='soleurl',value='',placeholder='Your page url')
+            else
+              input(id='J_soleUrl',class='input-xlarge disabled',disabled='',name='soleurl',value='#{user.pageurl}',placeholder='Your page url')
+      div(class='control-group warning')
+        label(class='control-label') 
+        div(class='controls')
+          span(class='help-inline') 请慎重噢，这个选项只能设置一次
+      div(class='control-group')
+        div(class='controls')
+          button(class='btn btn-primary',type='submit') 确认提交!
+    include ../common/footer
+  script
+    seajs.use('mods/set');
+  

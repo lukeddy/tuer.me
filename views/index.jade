@@ -1,0 +1,38 @@
+extends common/layout
+block content
+  div(class="container")
+    div(class='div-fluid show-grid')
+      div(class='row')
+          div(class='span8')
+            div(class='well row')
+              h2 欢迎访问兔耳Beta版!
+              h3 网站目前为止已经有#{usersCount}个注册用户,#{diariesCount}篇公开日记和#{privacyCount}篇私密日记啦!
+             div(class='row')
+               include package/lastfeed
+          div(class='span4') 
+            div(class='well',id='J_UserBar')
+              if(session.is_login)
+                h3 欢迎,#{session.userdata.nick}!
+              else
+                include package/smallLogin
+            include package/monthHTML
+            if(session.is_login)
+                div(class='well')
+                  h4 
+                    a(href='/diary/write',title='我要写日记') 我要写日记
+                div(class='well')
+                  h4 
+                    a(href='/notebook',title='管理日记本') 管理日记本
+            div(class="well")
+              a(href="http://www.tuer.me/diary/5089f4b11c63d8bc49000004",title="给兔耳们的明信片")
+                img(src="http://css.tuer.me/style/image/postal.jpg",alt="兔耳明信片活动")
+            div(class='well')
+              h4
+                a(href="/log",title="ChangeLog") ChangeLog
+            div(class="well")
+              h4 
+                a(href="http://www.tuer.me/diary/50851ba98bd5768b4d000001",title="提交BUG") 提交BUG
+    include common/footer
+  if(session.is_login)
+    script
+      seajs.use('mods/index.js?t=20121023');

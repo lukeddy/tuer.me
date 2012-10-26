@@ -1,0 +1,15 @@
+extends ../common/layout
+block content
+  p 
+   a(href="/") 有帐号，立刻登陆
+  hr
+  form(action="/register/invite",method="post")
+    p 
+      label Email
+        input(type="text",name="email")
+    p 
+      label 昵称
+        input(type="text",name="nick")
+    p
+      input(type="submit",value="注册")
+  p(class="info") 我们会把激活邮件寄到你的信箱，如果发现收件箱里没有，可以检查下垃圾邮件夹中是否有邮件噢！

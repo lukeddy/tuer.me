@@ -1,0 +1,67 @@
+extends ../common/layout
+block content
+  div(class='container')
+    h2 #{session.title}
+    hr
+    form(enctype='multipart/form-data',class='form-horizontal',id='J_write',action='#{action}',method='post')
+      if(action=='/diary/update')
+        input(type='hidden',name='id',value='#{diary._id}')
+      if(diary.musicUrl)
+        input(type="hidden",name="music_url",id="J_musicUrl",value="#{diary.musicUrl}")
+      else 
+        input(type="hidden",name="music_url",id="J_musicUrl")
+      if(session.error.length)
+        div(class='control-group error')
+          span(class='help-inline') #{session.error}
+      div(class='control-group')
+          select(name='bookid')
+            each item,i in books
+              if(item._id.toString() == diary.notebook)
+                option(value="#{item._id}",selected="selected") #{item.name}
+              else
+                option(value="#{item._id}") #{item.name}
+          a(href="/notebook",title="管理我的日记本") &nbsp;&nbsp;管理我的日记本 
+      div(class="control-group")
+           each item,i in mood
+             label(class="inline") #{item.value} 
+               if(item.value == diary.mood)
+                 input(type="radio",value="#{item._id}",name="mood",checked="true") 
+               else
+                 input(type="radio",value="#{item._id}",name="mood") 
+      div(class="control-group")
+           each item,i in weather
+             label(class="inline") #{item.value} 
+               if(item.value == diary.weather)
+                 input(type="radio",value="#{item._id}",name="weather",checked="true") 
+               else
+                 input(type="radio",value="#{item._id}",name="weather") 
+      div(class="control-group")
+            label 地点: 
+              if(diary.location)
+                input(type="text",name="location",placeholder="写日记的地点",value="#{diary.location}")
+              else
+                input(type="text",name="location",placeholder="写日记的地点")
+      div(class='control-group')
+          textarea(class='input-xlarge',style='width:90%;',id='content',name='content',rows='15') #{diary.content}
+      div(class='control-group')
+          if(diary.privacy == 1)
+            input(name='privacy',type='checkbox',value='1',checked='true') 
+          else
+            input(name='privacy',type='checkbox',value='1') 
+          &nbsp;只有自己可见
+          if(diary.forbid == 1)
+            input(name='forbid',type='checkbox',value='1',checked='true') 
+          else
+            input(name='forbid',type='checkbox',value='1') 
+          &nbsp;不允许被回复 
+      div(class='control-group',id="J_files")
+        if(diary.img)
+          img(src='#{diary.img}')
+          a(href='javascript:void(0);',id='J_changePic') 修改图片
+        else
+          input(type='file',name='uploadPic',class='J_files')
+      div(class='control-group')
+          p 日记最多可写2200个字.
+      div(class='control-group')
+          button(type='submit',class='btn btn-primary') #{session.title}
+    include ../common/footer

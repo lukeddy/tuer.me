@@ -1,0 +1,98 @@
+extends common/layout
+block content
+  div(class="container")
+    div(class='div-fluid show-grid')
+      div(class="row")
+        div(class="span3 bs-docs-sidebar")
+          ul(class="nav nav-list bs-docs-sidenav affix")
+            li 
+              a(href="#about") API使用说明
+            li
+              a(href="#oauth") OAuth认证说明
+            li 
+              a(href="#doc") API文档
+            li
+              a(href="#help") 帮助中心
+        div(class="span9")
+          h3 兔耳API开放平台
+          p 如果你想使用tuer的数据，开发自己的第三方应用，看这里就对了~
+          section(id="about")
+            h3 API使用说明
+            p 要调用兔耳的API，您必需先申请一个API Key和Shared Secret.
+            p 目前本站只支持REST请求形式，发送一个HTTP请求到特定的地址，并制定调用方法名和参数，然后返回格式化的结果。
+            p 例如API地址为:
+              code http://api.tuer.me/rest/
+              ,调用方法为
+              code tuerBase.user.getInfo
+              ,API Key为app_key,userId为user_id,那么请求的所有参数为:
+            table(class="table")
+              thead
+                tr
+                  th 参数
+                  th 参数值
+              tbody
+                tr
+                  td method
+                  td tuerBase.user.getInfo
+                tr
+                  td api_key
+                  td api_key
+                tr
+                  td userId
+                  td user_id
+            p 最后一点，就是每一个请求都必须带有Shared Secret加密后的api_sig签名
+            p 那么最终要发送一个这样的请求:
+              code http://api.tuer.me/rest/?method=tuerBase.user.getInfo&api_key=api_key&userId=user_id&api_sig=api_sig
+            p api_sig的加密算法为api_key+method方法名字md5之后的值,比如上面的sig算法就为
+              code md5(api_secret+tuerBase.user.getInfo)
+              所有的请求都要以utf-8的编码发送。
+          section(id="oauth")
+            h3 OAuth认证说明
+            p 兔耳使用OAuth2.0的认证方式，对用户的信息进行获取。
+            p 首先需要获取Authorization Code值,需要先给用户的URL定位到
+              code http://api.tuer.me/oauth/authorize?client_id=1&redirect_uri=http://yourapp.foo/
+              这个地址，让用户进行登陆然后授权。随后跳转回redirect_uri地址,比如
+              code http://yourapp.foo/?code=da723bdsabgkj21321das12300
+              然后增加code的值，你可以进行获取，这里的code就是authorization code的值。
+            p 使用authorization code的值换取token值，发送请求如下:
+              code http://api.tuer.me/oauth/authorize?client_id=1&redirect_uri=http://yourapp.foo/&response_type=token
+              如果正确则会返回给你需要的token值，在进行用户信息操作时，随着请求一起发出即可。
+            table(class="table")
+              thead
+                tr
+                  th 参数
+                  th 参数值
+              tbody
+                tr
+                  td client_id
+                  td api_key
+                tr
+                  td redirect_uri
+                  td 回调URL
+                tr
+                  td code
+                  td authorize code
+                tr
+                  td response_type
+                  td 获取到的code值
+                tr
+                  td token
+                  td authorize token
+            p 具体的参考信息请见 OAuth2.0 文档。
+          section(id="doc") 
+            h3 API文档
+            h5 用户相关
+            p 编写中...
+            h5 日记相关
+            p 编写中...
+            h5 日记本相关
+            p 编写中...
+            h5 搜索相关
+            p 编写中...
+          section(id="help") 
+            h3 帮助中心
+            p 目前API没有编写完成，还不能申请。
+            p 如果想申请appkey,可先邮件我备份到designsor[at]gmail.com，或者站内给我留言.
+    include common/footer
+    script
+        $('.bs-docs-sidenav').affix();

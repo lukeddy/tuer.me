@@ -1,0 +1,30 @@
+h4 最新日记 
+hr 
+if(diaries.length)
+  div(class='Diary-wrap')
+    each item,i in diaries 
+      div(class='Diary-row')
+        div(class='Diary-left')
+         a(href='/user/profile/#{item.pageurl}',title='#{item.created_user}')
+           img(src='#{item.avatarUrl}',alt='#{item.created_user}')
+        div(class='Diary-right')
+         h5 
+           if(item.title)
+             a(href="/diary/#{item._id}") #{item.title} 
+             small [#{item.bookname}]
+           else
+             a(href="/diary/#{item._id}") #{item.bookname} 
+           if(item.weather)
+             small [天气:#{item.weather}] 
+           if(item.mood)
+             small [心情:#{item.mood}] 
+           if(item.location)
+             small [地点:#{item.location}]
+         div(class='Diary-content')
+            if(item.img)
+              img(src='#{item.img}')
+            p #{item.content}
+         div(class='bar') #{item.created_at} #{item.created_user} #{item.commentcount}回应 
+  !{pag}
+else
+  p There is nothing yet.

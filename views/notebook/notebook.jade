@@ -1,0 +1,61 @@
+extends ../common/layout
+block content
+  link(rel='stylesheet',href='http://css.tuer.me/libs/colorpicker/css/colorpicker.css');
+  script(src='http://js.tuer.me/libs/colorpicker/js/colorpicker.js');
+  div(class='container')
+    h2 #{session.title}
+    hr
+    div(class='control-group')
+      h3 添加
+      form(class='form-horizontal',action='/notebook/save',method='post')
+       if(session.error.length)
+           div(class='control-group error')
+            span(class='help-inline') #{session.error}
+       if(session.success.length)
+           div(class='control-group success')
+            span(class='help-inline') #{session.success}
+       div
+         input(type='text',name='bookname')
+         div(id="J_NewColorSelector")
+           div(style="background-color:#4d67d1;")
+       p 鼠标不松，移动色版，可以选取日记本封面颜色
+       p
+         input(type='hidden',value='4d67d1',name='bgcolor',id='J_newBg')
+         button(type='submit',class='btn btn-primary') 添加日记本
+    div(class='control-group')
+      h3 修改
+        small (默认日记本不可修改)
+      each item,i in notebooks
+        input(type='hidden',value='#{item.bgcolor}',id='#{item._id}')
+      form(class='form-horizontal',action='/notebook/update',method='post')
+          div
+            if(notebooks.length)
+              select(id='J_updateNote',name="bookid")
+                each item,i in notebooks
+                  option(value='#{item._id}') #{item.name}
+              div 
+                input(type='text',name='bookname',id='J_editbookname',style='vertical-align:middle;')
+                div(id="J_EditColorSelector")
+                  div()
+                p 鼠标不松，移动色版，可以编辑日记本封面颜色
+              p
+                input(type='hidden',value='',name='bgcolor',id='J_editBg')
+                button(type='submit',class='btn btn-primary') 修改
+            else
+              p(class='text-warning') 您还没有创建任何自定义的日记本
+    div(class='control-group')
+      h3 删除
+        small (该日记本下的日记将转移到默认日记本)
+      form(class='form-horizontal',action='/notebook/remove',method='post')
+          p
+            if(notebooks.length)
+              select(id='J_delNote',name='bookid',style='vertical-align:middle;')
+                each item,i in notebooks
+                  option(value='#{item._id}') #{item.name}
+              p
+                button(type='submit',class='btn btn-primary') 删除日记本
+            else
+              p(class='text-warning') 您还没有创建任何自定义的日记本
+    include ../common/footer
+  script
+    seajs.use('mods/notebook');

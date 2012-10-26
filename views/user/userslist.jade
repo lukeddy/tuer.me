@@ -1,0 +1,19 @@
+extends ../common/layout
+block content
+  div(class='container')
+    h4 #{session.title} (#{users.length})
+    div(class='avatar')
+      a(href='/user/profile/#{user._id}',title='#{user.nick}')
+        img(src='#{user.avatarUrl}',alt='#{user.nick}')
+    hr
+    if(users.length)
+      div(class='row Friends-list')
+        ul
+          each user,i in users
+            li
+              a(href='/user/profile/#{user._id}',title='#{user.nick}') 
+                  img(src='#{user.avatarUrl}',alt='#{user.nick}')
+              span #{user.nick}
+    else
+        p 神马也还没有~
+    include ../common/footer

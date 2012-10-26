@@ -1,0 +1,34 @@
+extends ../common/layout
+block content
+  div(class='container')
+    form(class='form-horizontal',action='/set/pwd/save',method='post')
+      legend 修改密码
+      if(session.error.length)
+          div(class='control-group error')
+              label(class='control-label')
+              div(class='controls') 
+                  span(class='help-inline') #{session.error}
+      if(session.success.length)
+          div(class='control-group success')
+              label(class='control-label')
+              div(class='controls') 
+                  span(class='help-inline') #{session.success}
+      div(class='control-group validation-container')
+        label(class='control-label',for='old_pwd') 旧密码
+        div(class='controls') 
+          input(type='password',value='',id="old_pwd",placeholder="旧密码",name="old_pwd")
+      div(class='control-group validation-container')
+        label(class='control-label',for='new_pwd') 新密码
+        div(class='controls') 
+          input(type='password',value='',id="new_pwd",placeholder="新密码",name="new_pwd")
+      div(class='control-group validation-container')
+        label(class='control-label',for='confirm_pwd') 确认密码
+        div(class='controls') 
+          input(type='password',value='',id="confirm_pwd",placeholder="确认密码",name="confirm_pwd")
+      div(class='control-group')
+        div(class='controls')
+          button(class='btn btn-primary',type='submit') 修改
+    include ../common/footer
+  script
+    seajs.use('mods/set');
+  

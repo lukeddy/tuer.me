@@ -1,0 +1,17 @@
+extends ../common/layout
+block content
+  div(class='container')
+    form(class='form-horizontal',action='/forgot/findpwd',method='post')
+      legend 找回密码
+      div(class='control-group validation-container')
+        label(class='control-label',for='J_email') 注册时的邮箱
+        div(class='controls')
+          input(id='J_email',type='text',class='input-samll',placeholder='Email Address...',name='email')
+      div(class='control-group')
+        div(class='controls')
+          p 我们会把新密码发到你注册的邮箱里.
+          button(class='btn btn-primary',type='submit') 找回
+    include ../common/footer
+  script
+    seajs.use('mods/reg');
+  

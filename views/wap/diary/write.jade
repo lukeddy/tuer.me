@@ -1,0 +1,36 @@
+extends ../common/layout
+block content
+   if(session.error.length)
+       p(class="error") #{session.error}
+   h2 #{title}
+   hr
+   if(diary.img)
+     img(src="#{diary.img}")
+   form(method="post",action="#{action}")
+     if(action=="/diary/update")
+       input(type="hidden",name="id",value="#{diary._id}")
+     p
+       select(name="bookid",id="bookid")
+         each item,i in books
+           if(item._id.toString() == diary.notebook)
+              option(value="#{item._id}",selected="selected") #{item.name}
+           else
+              option(value="#{item._id}") #{item.name}
+       label(for="bookid") 请选择日记本
+     p 
+       textarea(name='content') #{diary.content}
+     p
+       if(diary.privacy == 1)
+         input(name="privacy",id="privacy",type="checkbox",value="1",checked="true")
+       else
+         input(name="privacy",id="privacy',type="checkbox",value="1")
+       label(for="privacy") 只有自己可见
+     p
+       if(diary.forbid == 1)
+         input(name='forbid',id="forbid",type='checkbox',value='1',checked='true') 
+       else
+         input(name='forbid',id="forbid",type='checkbox',value='1') 
+       label(for="forbid") 不允许被回复 
+     p 
+       input(type="submit",value="#{title}")
+     p 日记最多可写2200个字.

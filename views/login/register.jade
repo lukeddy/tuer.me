@@ -1,0 +1,23 @@
+extends ../common/layout
+block content
+  div(class='container')
+    form(class='form-horizontal',action='/register/invite',method='post')
+      legend 注册兔耳
+      div(class='control-group validation-container')
+        label(class='control-label',for='J_email') 注册邮箱
+        div(class='controls')
+          input(id='J_email',type='text',class='input-xlarge',placeholder='Email Address...',name='email')
+      div(class='control-group validation-container')
+        label(class='control-label',for='J_nick') 昵称
+        div(class='controls')
+          input(id='J_nick',type='text',class='input-xlarge',placeholder='Your Nick...',name='nick')
+      div(class='control-group')
+        div(class='controls')
+          p 我们会把激活邮件寄到你的信箱，如果发现收件箱里没有，可以检查下垃圾邮件夹中是否有邮件噢！
+          p
+            a(href='/login/') 已经有帐号，我去登录啦
+          button(class='btn btn-primary',type='submit') 注册!
+    include ../common/footer
+  script
+    seajs.use('mods/reg');
+  
