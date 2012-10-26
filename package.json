@@ -18,7 +18,7 @@
     , "nodemailer":"0.3.12"
     , "xml2js":"0.2.0"
     , "punycode":"1.2.0"
-  },
+  }
   ,"contributors":[ "xiaojue" ]
   ,"homepage":"http://www.tuer.me"
   ,"description":"tuer.me,a diary web site"
