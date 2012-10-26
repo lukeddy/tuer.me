@@ -45,7 +45,9 @@ var findpwd = function(req, res) {
 				accounts: email
 			},
 			{
-				pwd: pwd
+			    $set:{
+                    pwd: pwd
+                }
 			},
 			'users', function(err, ret) {
 				if (err) {
