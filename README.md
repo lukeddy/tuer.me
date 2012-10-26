@@ -9,7 +9,7 @@ tuer.me
 
   确认本机有安装redis-server,mongodb,nginx,nginx concat这几个东西并且已经启动.
 
-  nginx的配置如下,并把hosts修改,把tuer.me这几个域名指向本地127.0.0.1
+  nginx的配置如下,本地路径记得自行修改,并把hosts修改,把tuer.me这几个域名指向本地127.0.0.1
 
 ``` html
     server {
