@@ -11,12 +11,12 @@ var save = function(req, res) {
 		replyname = req.body.replyname,
 		diaryid = req.body.diaryid;
 		//校验
-        if(!diaryid){
+		if (!diaryid) {
 			res.redirect('500');
-            return;
-        }
+			return;
+		}
 		if (content.length <= 0 || content.length > 220) {
-			req.flash('error',"评论内容不能为空或超过220个字节");
+			req.flash('error', "评论内容不能为空或超过220个字节");
 			res.redirect('/diary/' + diaryid);
 			return;
 		}
@@ -34,7 +34,7 @@ var save = function(req, res) {
 		tuerBase.findById(diaryid, 'diary', function(err, diarydata) {
 			if (!err) {
 				if (diarydata.forbid == 1) {
-					req.flash('error','此日记不允许被评论');
+					req.flash('error', '此日记不允许被评论');
 					res.redirect('/diary/' + diaryid);
 					return;
 				}
@@ -79,11 +79,11 @@ var remove = function(req, res) {
 				res.redirect('500');
 			}
 		};
-        //校验
-        if(!commentid && !diaryid){
-            res.redirect('500');
-            return;
-        }
+		//校验
+		if (!commentid && ! diaryid) {
+			res.redirect('500');
+			return;
+		}
 
 		function deletecomment(id, diaryid, comment) {
 
@@ -114,8 +114,8 @@ var remove = function(req, res) {
 				if (err) {
 					res.redirect('500');
 				} else {
-                    deleteproxy.trigger('user',user);
-                }
+					deleteproxy.trigger('user', user);
+				}
 			});
 
 			tuerBase.update({
