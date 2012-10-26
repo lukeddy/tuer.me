@@ -2,5 +2,8 @@
 *.swp
 .gitCOMMIT_DEITMSG
 /node_modules/
-/public/images/*
+/public/images/80/*
+/public/images/150/*
+/public/images/300/*
+/public/images/500/*
 /backup/*
