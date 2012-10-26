@@ -252,13 +252,13 @@ var write = function(req, res) {
 			action: '/diary/save',
 			user: user,
 			books: books,
-            mood:config.mood,
-            weather:config.weather,
+			mood: config.mood,
+			weather: config.weather,
 			diary: {}
 		});
 	};
 
-	proxy.assign('user', 'books',render);
+	proxy.assign('user', 'books', render);
 	tuerBase.findUser(uid, function(err, user) {
 		if (err) {
 			res.redirect('500');
@@ -287,9 +287,9 @@ var save = function(req, res) {
 	}
 	var bookid = req.body.bookid,
 	content = req.body.content,
-    location = req.body.location,
-    weather = req.body.weather,
-    mood = req.body.mood,
+	location = req.body.location,
+	weather = req.body.weather,
+	mood = req.body.mood,
 	privacy = req.body.privacy || 0,
 	forbid = req.body.forbid || 0,
 	uploadPic = req.files.uploadPic,
@@ -310,20 +310,20 @@ var save = function(req, res) {
 	saveNote = function(removeTemp, pic_path) {
 		var filelist = {};
 		if (pic_path) filelist['pic_path'] = picname;
-        var savedata = {
+		var savedata = {
 			content: content,
 			notebook: bookid,
 			userid: req.session.userdata._id,
 			filelist: filelist,
-            mood:mood,
-            weather:weather,
+			mood: mood,
+			weather: weather,
 			privacy: privacy,
 			forbid: forbid,
 			commentcount: 0
-        };
-        if(weather) savedata['weather'] = weather;
-        if(mood) savedata['mood'] = mood;
-        if(location) savedata['location'] = location;
+		};
+		if (weather) savedata['weather'] = weather;
+		if (mood) savedata['mood'] = mood;
+		if (location) savedata['location'] = location;
 		tuerBase.save(savedata, 'diary', function(err, data) {
 			if (err) {
 				req.flash('error', err);
@@ -343,12 +343,12 @@ var save = function(req, res) {
 		return;
 	}
 
-    if(location.trim().length > 10){
+	if (location.trim().length > 10) {
 		req.flash('error', '地点最多10个字');
 		util.remove_temp(proxy, 'removeTemp', temp_path);
 		res.redirect('back');
 		return;
-    }
+	}
 
 	if (content.trim().length > 2200) {
 		req.flash('error', '日记字数最多2200字');
@@ -420,8 +420,8 @@ var edit = function(req, res) {
 			action: '/diary/update',
 			user: user,
 			books: books,
-            mood:config.mood,
-            weather:config.weather,
+			mood: config.mood,
+			weather: config.weather,
 			diary: diary
 		});
 	};
@@ -467,15 +467,28 @@ var update = function(req, res) {
 	}
 
 	var proxy = new EventProxy(),
-	picname,
 	bookid = req.body.bookid,
-    location = req.body.location,
+	location = req.body.location,
 	content = req.body.content,
-    mood = req.body.mood,
-    weather = req.body.weather,
+	mood = req.body.mood,
+	weather = req.body.weather,
 	diaryid = req.body.id,
 	privacy = req.body.privacy || 0,
 	forbid = req.body.forbid || 0,
+	uploadPic = req.files.uploadPic,
+	temp_path = uploadPic.path,
+	type = function() {
+		var _type;
+		try {
+			_type = '.' + uploadPic.type.split('/')[1];
+		} catch(e) {
+			return ".undef";
+		}
+		return _type;
+	} (),
+	filename = path.basename(temp_path),
+	picname = filename + type,
+	target_path = rootdir + '/public/images/' + picname,
 	updateNote = function(removeTemp, pic_path, diary) {
 
 		if (req.session.userdata._id.toString() != diary.userid) {
@@ -487,16 +500,16 @@ var update = function(req, res) {
 			'pic_path': picname
 		}: diary.filelist;
 
-        var updatedata = {
-				content: content,
-				filelist: files,
-				forbid: forbid,
-				privacy: privacy,
-				notebook: bookid
-        };
-        if(weather) updatedata['weather'] = weather;
-        if(mood) updatedata['mood'] = mood;
-        if(location) updatedata['location'] = location;
+		var updatedata = {
+			content: content,
+			filelist: files,
+			forbid: forbid,
+			privacy: privacy,
+			notebook: bookid
+		};
+		if (weather) updatedata['weather'] = weather;
+		if (mood) updatedata['mood'] = mood;
+		if (location) updatedata['location'] = location;
 
 		tuerBase.updateById(diaryid, {
 			$set: updatedata
@@ -539,20 +552,6 @@ var update = function(req, res) {
 	}
 
 	if (req.files.hasOwnProperty('uploadPic')) {
-		var uploadPic = req.files.uploadPic,
-		temp_path = uploadPic.path,
-		type = function() {
-			var _type;
-			try {
-				_type = '.' + uploadPic.type.split('/')[1];
-			} catch(e) {
-				return ".undef";
-			}
-			return _type;
-		} (),
-		filename = path.basename(temp_path);
-		picname = filename + type;
-		var target_path = rootdir + '/public/images/' + picname;
 		if (uploadPic.size) {
 			if (!type.match(/jpg|png|jpeg|gif/gi)) {
 				req.flash('error', '只能上传图片文件');
