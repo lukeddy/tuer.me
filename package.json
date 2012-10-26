@@ -5,7 +5,6 @@
       "express": "2.5.8"
     , "jade": ">= 0.0.1"
     , "eventproxy":"0.1.2"
-    , "forever":">=0.8.5"
     , "node-dev":">=0.2.2"
     , "mongodb":"1.1.4"
     , "canvas":"0.12.1"

@@ -5,7 +5,7 @@ tuer.me
   
   git clone https://github.com/xiaojue/tuer.me.git
 
-  npm install -d把依赖模块全部安装好
+  sudo npm install -d把依赖模块全部安装好，或者用root用户，因为有些是需要比较高的权限的
 
   确认本机有安装redis-server,mongodb,nginx,nginx concat这几个东西并且已经启动.
 
