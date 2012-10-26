@@ -1,8 +1,6 @@
 tuer.me
 =======
 
-兔耳日记
-  
 配置说明：
   
   git clone https://github.com/xiaojue/tuer.me.git
@@ -95,4 +93,4 @@ tuer.me
 
   可以自行注释相关代码，并在数据库中手动增加用户即可。
 
-  默认会有一个测试账户，在init.js中被添加 用户名admin 密码1234qwer
+  默认会有一个测试账户，在init.js中被添加 用户名admintest@tuer.me 密码1234qwer
